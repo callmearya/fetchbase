@@ -21,18 +21,24 @@
             margin-top: 20px;
         }
 
-        div {
+        button {
             margin: 5px;
             padding: 10px;
-            border: 1px solid #ccc;
+            border: 1px solid #007bff;
+            background-color: #007bff;
+            color: white;
             border-radius: 5px;
-            width: 150px;
-            text-align: center;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
         }
     </style>
 </head>
 <body>
-    <h1>Room IDs</h1>
+    <h1>Available Rooms</h1>
     <div id="roomsContainer"></div>
 
     <!-- Include Firebase SDKs -->
@@ -64,14 +70,20 @@
             onValue(roomsRef, (snapshot) => {
                 roomsContainer.innerHTML = ''; // Clear previous room display
                 const rooms = snapshot.val(); // Get all room data
-                console.log("Fetched rooms data:", rooms); // Log the fetched data
 
                 if (rooms) {
                     Object.keys(rooms).forEach((roomId) => {
-                        // Create a div to display each room ID
-                        const roomDiv = document.createElement('div');
-                        roomDiv.textContent = `Room ID: ${roomId}`; // Display the room ID
-                        roomsContainer.appendChild(roomDiv); // Append the room info to the container
+                        // Create a button for each room ID
+                        const roomButton = document.createElement('button');
+                        roomButton.textContent = `Room ID: ${roomId}`; // Display the room ID
+
+                        // Set button click event to redirect
+                        roomButton.onclick = () => {
+                            const targetUrl = `https://sihtesting.netlify.app?roomId=${roomId}`;
+                            window.location.href = targetUrl; // Redirect to the target URL
+                        };
+
+                        roomsContainer.appendChild(roomButton); // Append the button to the container
                     });
                 } else {
                     roomsContainer.textContent = 'No available rooms.'; // Message if no rooms
