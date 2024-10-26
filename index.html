@@ -77,6 +77,12 @@
                         const roomButton = document.createElement('button');
                         roomButton.textContent = `Room ID: ${roomId}`; // Display the room ID
 
+                        // Check the participant count
+                        const participantCount = rooms[roomId].participantCount || 0; // Default to 0 if not set
+                        if (participantCount >= 2) {
+                            roomButton.disabled = true; // Disable button if participant count is 2 or more
+                        }
+
                         // Set button click event to redirect
                         roomButton.onclick = () => {
                             const targetUrl = `https://sihtesting.netlify.app?roomCode=${roomId}`;
