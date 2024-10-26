@@ -65,7 +65,7 @@
 
         // Fetch room IDs from Firebase Realtime Database
         function fetchRoomIds() {
-            const roomsRef = ref(database, 'calls'); // Reference to the 'rooms' node
+            const roomsRef = ref(database, 'calls'); // Reference to the 'calls' node
 
             onValue(roomsRef, (snapshot) => {
                 roomsContainer.innerHTML = ''; // Clear previous room display
@@ -79,7 +79,7 @@
 
                         // Set button click event to redirect
                         roomButton.onclick = () => {
-                            const targetUrl = `https://sihtesting.netlify.app?roomId=${roomId}`;
+                            const targetUrl = `https://sihtesting.netlify.app?roomCode=${roomId}`;
                             window.location.href = targetUrl; // Redirect to the target URL
                         };
 
