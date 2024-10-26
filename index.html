@@ -90,6 +90,7 @@
                 }
             }, (error) => {
                 console.error("Error fetching rooms:", error); // Log any errors
+                roomsContainer.textContent = 'Error fetching rooms, please try again later.'; // Display error message
             });
         }
 
