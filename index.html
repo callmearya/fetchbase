@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Room IDs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        #roomsContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        div {
+            margin: 5px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 150px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Room IDs</h1>
+    <div id="roomsContainer"></div>
+
+    <!-- Include Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js"></script>
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyD1b7InCyJf03f82MBrFCXNd_1lir3nWrQ",
+            authDomain: "lil-testing.firebaseapp.com",
+            databaseURL: "https://lil-testing-default-rtdb.firebaseio.com",
+            projectId: "lil-testing",
+            storageBucket: "lil-testing.appspot.com",
+            messagingSenderId: "309006701748",
+            appId: "1:309006701748:web:2cfa73093e14fbcc2af3e1"
+        };
+
+        // Initialize Firebase
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+
+        const database = firebase.database();
+        const roomsContainer = document.getElementById('roomsContainer');
+
+        // Fetch room IDs from Firebase Realtime Database
+        async function fetchRoomIds() {
+            const roomsRef = database.ref('rooms'); // Reference to the 'rooms' node
+
+            roomsRef.on('value', (snapshot) => {
+                roomsContainer.innerHTML = ''; // Clear previous room display
+                const rooms = snapshot.val(); // Get all room data
+
+                if (rooms) {
+                    Object.keys(rooms).forEach((roomId) => {
+                        // Create a div to display each room ID
+                        const roomDiv = document.createElement('div');
+                        roomDiv.textContent = `Room ID: ${roomId}`; // Display the room ID
+                        roomsContainer.appendChild(roomDiv); // Append the room info to the container
+                    });
+                } else {
+                    roomsContainer.textContent = 'No available rooms.'; // Message if no rooms
+                }
+            });
+        }
+
+        // Initialize fetching of room IDs
+        fetchRoomIds();
+    </script>
+</body>
+</html>
