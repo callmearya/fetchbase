@@ -83,10 +83,11 @@
                             roomButton.disabled = true; // Disable button if participant count is 2 or more
                         }
 
-                        // Set button click event to redirect
+                        // Set button click event to open in a popup
                         roomButton.onclick = () => {
                             const targetUrl = `https://sihtesting.netlify.app?roomCode=${roomId}`;
-                            window.location.href = targetUrl; // Redirect to the target URL
+                            const popupFeatures = 'width=600,height=400,menubar=no,location=no,resizable=no,scrollbars=no,status=no';
+                            window.open(targetUrl, 'RoomPopup', popupFeatures); // Open in a popup
                         };
 
                         roomsContainer.appendChild(roomButton); // Append the button to the container
